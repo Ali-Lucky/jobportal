@@ -1,6 +1,6 @@
 import mongoose, { ConnectOptions } from "mongoose";
 
-export const connectToDatabase = () => {
+export const connectToDatabase = (): void => {
     if (!process.env.DB_URI) {
         throw new Error("DB_URI not defined in environment variables");
     };

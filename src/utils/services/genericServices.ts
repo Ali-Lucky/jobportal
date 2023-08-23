@@ -1,9 +1,17 @@
-import { FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
-import userModel, { User } from "../../models/user"
+import { Document, Model, FilterQuery, QueryOptions, UpdateQuery } from "mongoose";
+import userModel, { User } from "../../models/user";
 
-export const create = (input: User): object => {
-    return userModel.create(input);
+export class CRUDService<T extends Document> {
+    constructor(private model: Model<T>) {};
+
+    create(input: T): Promise<T>{
+        return this.model.create(input);
+    };
 };
+
+// export const create = (input: User): object => {
+//     return userModel.create(input);
+// };
 
 export const findOne = (query: FilterQuery<User>, options: QueryOptions): object => {
     return userModel.findOne(query, {}, options);
