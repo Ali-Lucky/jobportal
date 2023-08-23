@@ -22,5 +22,7 @@
     "jsonwebtoken": "^9.0.1",
     "mongoose": "^7.4.4",
     "nodemailer": "^6.9.4"
-  }
+  },
+  "repository": "https://github.com/Ali-Lucky/jobportal.git",
+  "author": "Lucky Ali <luckyshaif888@gmail.com>"
 }
