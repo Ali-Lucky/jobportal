@@ -1,4 +1,5 @@
 import mongoose, { ConnectOptions } from "mongoose";
+import log from "../utils/logger";
 
 export const connectToDatabase = (): void => {
     if (!process.env.DB_URI) {
@@ -10,7 +11,7 @@ export const connectToDatabase = (): void => {
         useUnifiedTopology: true
     } as ConnectOptions)
         .then(() => {
-            console.log("Database Connected");
+            log.info("Database Connected");
         })
         .catch((err) => {
             console.log(err);

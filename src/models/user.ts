@@ -1,30 +1,46 @@
-import { Schema, model, Document } from "mongoose";
+import { Severity, getModelForClass, modelOptions, pre, prop } from "@typegoose/typegoose";
+import { hash } from "bcrypt";
 
-export interface User extends Document{
-    fullname: string,
-    email: string,
-    password: string,
-    role: string
+@modelOptions({
+    schemaOptions: {
+        timestamps: true
+    },
+    options: {
+        allowMixed: Severity.ALLOW
+    }
+})
+
+@pre<User>("save", async function () {
+    if (!this.isModified("password")) {
+        return;
+    }
+    const hashedPassword = await hash(this.password, 10);
+    this.password = hashedPassword;
+    return;
+})
+
+export class User {
+    @prop({ required: true })
+    fullname: string;
+
+    @prop({ lowercase: true, required: true, unique: true })
+    email: string;
+
+    @prop({ required: true })
+    password: string;
+
+    @prop({ required: true, enum: ["recruiter", "jobseeker"] })
+    role: string;
+
+    verificationToken: string | null;
+
+    @prop({ default: false })
+    isVerified: boolean;
+
+    @prop({ default: false })
+    isDeleted: boolean
 };
 
-const userSchema = new Schema<User>({
-    fullname: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    role: {
-        type: String,
-        required: true,
-        enum: ["recruiter", "jobseeker"]
-    },
-}, {timestamps:true});
+const userModel = getModelForClass(User);
 
-export default model<User>('User', userSchema);
+export default userModel;

@@ -13,9 +13,10 @@ export class CRUDService<T extends Document> {
 //     return userModel.create(input);
 // };
 
-export const findOne = (query: FilterQuery<User>, options: QueryOptions): object => {
-    return userModel.findOne(query, {}, options);
-};
+
+// export const findOne = (query: FilterQuery<User>, options: QueryOptions): object => {
+//     return userModel.findOne(query, {}, options);
+// };
 
 export const findById = (id: string, options: QueryOptions): object => {
     return userModel.findById(id, {}, options);
