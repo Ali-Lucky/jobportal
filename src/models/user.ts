@@ -1,5 +1,6 @@
 import { Severity, getModelForClass, modelOptions, pre, prop } from "@typegoose/typegoose";
 import { hash } from "bcrypt";
+import { Document } from "mongoose"; // Import Mongoose Document type
 
 @modelOptions({
     schemaOptions: {
@@ -19,7 +20,7 @@ import { hash } from "bcrypt";
     return;
 })
 
-export class User {
+export class User extends Document { // Extend Mongoose Document
     @prop({ required: true })
     fullname: string;
 
@@ -39,7 +40,7 @@ export class User {
 
     @prop({ default: false })
     isDeleted: boolean
-};
+}
 
 const userModel = getModelForClass(User);
 
